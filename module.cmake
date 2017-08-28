@@ -1,7 +1,7 @@
 message(STATUS "Loading io module...")
 
 if (NOT CONFIGURED_ONCE)
-	set(MODULE_IO_MODULE_IO_SOURCE_DIR O_DIR}/src)
+	set(MODULE_IO_SOURCE_DIR ${MODULE_IO_DIR}/src)
 endif()
 
 include_directories(${MODULE_IO_DIR}/include)
