@@ -1,6 +1,3 @@
-# module-io
-
-```cpp
 /****************************************************************************
 ** ┌─┐┬ ┬┬─┐┌─┐┬─┐┌─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┬ ┬┌─┐┬─┐┬┌─
 ** ├─┤│ │├┬┘│ │├┬┘├─┤  ├┤ ├┬┘├─┤│││├┤ ││││ │├┬┘├┴┐
@@ -18,4 +15,28 @@
 ** ensure the GNU Lesser General Public License version 3 requirements
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
-```
+
+#ifndef INCLUDE_H_AFW_INFO_OS
+#define INCLUDE_H_AFW_INFO_OS
+
+#include <iostream>
+#include <AuroraFW/TLib/Target/Platform.h>
+
+#ifdef AFW_TARGET_PLATFORM_ANDROID
+    #include <android/api-level.h>
+#endif
+
+namespace AuroraFW
+{
+    namespace Info {
+        namespace OS {
+            std::string getManufacturer();
+            std::string getArchitecture();
+            std::string getVersion();
+            std::string getName();
+            std::string getUserComputerName();
+        }
+    }
+}
+
+#endif // INCLUDE_H_AFW_INFO_OS

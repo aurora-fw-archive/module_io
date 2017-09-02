@@ -1,6 +1,3 @@
-# module-io
-
-```cpp
 /****************************************************************************
 ** ┌─┐┬ ┬┬─┐┌─┐┬─┐┌─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┬ ┬┌─┐┬─┐┬┌─
 ** ├─┤│ │├┬┘│ │├┬┘├─┤  ├┤ ├┬┘├─┤│││├┤ ││││ │├┬┘├┴┐
@@ -18,4 +15,13 @@
 ** ensure the GNU Lesser General Public License version 3 requirements
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
-```
+
+namespace AuroraFW {
+	class File {
+		public:
+			File(Ar::String);
+			bool open();
+		private:
+			Ar::String Path;
+	};
+}

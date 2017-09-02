@@ -1,9 +1,27 @@
-#include <Aurora/IO/Timer.h>
+/****************************************************************************
+** ┌─┐┬ ┬┬─┐┌─┐┬─┐┌─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┬ ┬┌─┐┬─┐┬┌─
+** ├─┤│ │├┬┘│ │├┬┘├─┤  ├┤ ├┬┘├─┤│││├┤ ││││ │├┬┘├┴┐
+** ┴ ┴└─┘┴└─└─┘┴└─┴ ┴  └  ┴└─┴ ┴┴ ┴└─┘└┴┘└─┘┴└─┴ ┴
+** A Powerful General Purpose Framework
+** More information in: https://aurora-fw.github.io/
+**
+** Copyright (C) 2017 Aurora Framework, All rights reserved.
+**
+** This file is part of the Aurora Framework. This framework is free
+** software; you can redistribute it and/or modify it under the terms of
+** the GNU Lesser General Public License version 3 as published by the
+** Free Software Foundation and appearing in the file LICENSE included in
+** the packaging of this file. Please review the following information to
+** ensure the GNU Lesser General Public License version 3 requirements
+** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
+****************************************************************************/
 
-namespace Aurora {
+#include <AuroraFW/IO/Timer.h>
+
+namespace AuroraFW {
 	namespace IO {
 		Timer::Timer() {
-			#ifdef AURORA_TARGET_PLATFORM_WINDOWS
+			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			LARGE_INTEGER freq;
 			QueryPerformanceFrequency(&freq);
 			frequency = 1.0 / freq.QuadPart;
@@ -13,28 +31,28 @@ namespace Aurora {
 		}
 
 		void Timer::Reset() {
-			#ifdef AURORA_TARGET_PLATFORM_WINDOWS
+			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			QueryPerformanceCounter(&start);
-			#elif defined(AURORA_TARGET_ENVIRONMENT_POSIX)
+			#elif defined(AFW_TARGET_ENVIRONMENT_POSIX)
 			start = HighResolutionClock::now();
 			#endif
 		}
 
 		float Timer::Elapsed() {
-			#ifdef AURORA_TARGET_PLATFORM_WINDOWS
+			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			LARGE_INTEGER current;
 			QueryPerformanceCounter(&current);
 			uint64 cycles = current.QuadPart - start.QuadPart;
 			return (float)(cycles * frequency);
-			#elif defined(AURORA_TARGET_ENVIRONMENT_POSIX)
+			#elif defined(AFW_TARGET_ENVIRONMENT_POSIX)
 			return ElapsedMillis() / 1000.0f;
 			#endif
 		}
 
 		float Timer::ElapsedMillis() {
-			#ifdef AURORA_TARGET_PLATFORM_WINDOWS
+			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			return Elapsed() * 1000.0f;
-			#elif defined(AURORA_TARGET_ENVIRONMENT_POSIX)
+			#elif defined(AFW_TARGET_ENVIRONMENT_POSIX)
 			return std::chrono::duration_cast<milliseconds_type>(HighResolutionClock::now() - start).count();
 			#endif
 		}
