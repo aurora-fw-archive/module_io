@@ -20,40 +20,44 @@
 
 namespace AuroraFW {
 	namespace IO {
-		Timer::Timer() {
+		Timer::Timer()
+		{
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			LARGE_INTEGER freq;
 			QueryPerformanceFrequency(&freq);
-			frequency = 1.0 / freq.QuadPart;
+			_frequency = 1.0 / freq.QuadPart;
 			#endif
 
 			Reset();
 		}
 
-		void Timer::Reset() {
+		void Timer::Reset()
+		{
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-			QueryPerformanceCounter(&start);
+			QueryPerformanceCounter(&_start);
 			#elif defined(AFW_TARGET_ENVIRONMENT_POSIX)
-			start = HighResolutionClock::now();
+			_start = HighResolutionClock::now();
 			#endif
 		}
 
-		float Timer::Elapsed() {
+		float Timer::Elapsed()
+		{
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			LARGE_INTEGER current;
 			QueryPerformanceCounter(&current);
-			uint64 cycles = current.QuadPart - start.QuadPart;
-			return (float)(cycles * frequency);
+			uint64 cycles = current.QuadPart - _start.QuadPart;
+			return (float)(cycles * _frequency);
 			#elif defined(AFW_TARGET_ENVIRONMENT_POSIX)
 			return ElapsedMillis() / 1000.0f;
 			#endif
 		}
 
-		float Timer::ElapsedMillis() {
+		float Timer::ElapsedMillis()
+		{
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			return Elapsed() * 1000.0f;
 			#elif defined(AFW_TARGET_ENVIRONMENT_POSIX)
-			return std::chrono::duration_cast<milliseconds_type>(HighResolutionClock::now() - start).count();
+			return std::chrono::duration_cast<milliseconds_type>(HighResolutionClock::now() - _start).count();
 			#endif
 		}
 	}

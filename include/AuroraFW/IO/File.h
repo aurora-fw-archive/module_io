@@ -19,9 +19,9 @@
 namespace AuroraFW {
 	class File {
 		public:
-			File(Ar::String);
+			File(const Ar::String&);
 			bool open();
 		private:
-			Ar::String Path;
+			Ar::String _path;
 	};
 }

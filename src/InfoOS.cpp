@@ -27,8 +27,7 @@
 #include <windows.h>
 #endif
 
-namespace AuroraFW
-{
+namespace AuroraFW {
     namespace Info {
         namespace OS {
             std::string getManufacturer()
@@ -61,6 +60,7 @@ namespace AuroraFW
                     #endif
                 #endif
             }
+            
             std::string getName()
             {
                 #ifdef AFW_TARGET_PLATFORM_WINDOWS

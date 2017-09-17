@@ -30,8 +30,7 @@
 
 #include <AuroraFW/Info/RAM.h>
 
-namespace AuroraFW
-{
+namespace AuroraFW {
     namespace Info {
         namespace RAM {
             // Total virtual memory size in bytes

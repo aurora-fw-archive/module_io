@@ -26,8 +26,7 @@
     #include <android/api-level.h>
 #endif
 
-namespace AuroraFW
-{
+namespace AuroraFW {
     namespace Info {
         namespace OS {
             std::string getManufacturer();

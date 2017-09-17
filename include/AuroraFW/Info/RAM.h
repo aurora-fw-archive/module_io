@@ -19,8 +19,7 @@
 #ifndef INCLUDE_H_AFW_INFO_RAM
 #define INCLUDE_H_AFW_INFO_RAM
 
-namespace AuroraFW
-{
+namespace AuroraFW {
     namespace Info {
         namespace RAM {
             unsigned long getTotalVirtualMemory(); // Total virtual memory size in bytes
