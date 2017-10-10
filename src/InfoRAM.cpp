@@ -16,7 +16,7 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/TLib/Target/Platform.h>
+#include <AuroraFW/STDL/Target/Platform.h>
 
 #ifdef AFW_TARGET_PLATFORM_WINDOWS
 #include <windows.h>

@@ -16,9 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/TLib/Target/Platform.h>
-#include <AuroraFW/TLib/Target/OpenSource.h>
-#include <AuroraFW/TLib/Target/Architecture.h>
+#include <AuroraFW/STDL/Target/Platform.h>
+#include <AuroraFW/STDL/Target/Architecture.h>
 #include <AuroraFW/Info/OS.h>
 
 #ifdef AFW_TARGET_PLATFORM_GNU_LINUX
@@ -28,79 +27,77 @@
 #endif
 
 namespace AuroraFW {
-    namespace Info {
-        namespace OS {
-            std::string getManufacturer()
-            {
-                #ifdef AFW_TARGET_PLATFORM_WINDOWS
-                    return "Microsoft Corporation";
-                #elif defined(AFW_TARGET_PLATFORM_APPLE)
-                    return "Apple Inc.";
-                #elif defined(AFW_TARGET_IS_OPENSOURCE)
-                    return "Community (Open Source)";
-                #else
-                    return "Unknown Manufacturer";
-                #endif
-            }
-            std::string getArchitecture()
-            {
-                #ifdef AFW_TARGET_PLATFORM_GNU_LINUX
-                    struct utsname linuxname_temp;
-                    uname(&linuxname_temp);
-                    return std::string(linuxname_temp.machine);
-                #else
-                    #ifdef AFW_TARGET_CPUARCH_INTELX86
-                        return "x86 32-bit";
-                    #elif defined(AFW_TARGET_CPUARCH_AMD64)
-                        return "x86 64-bit";
-                    #elif defined(AFW_TARGET_CPUARCH_ARM)
-                        return "ARM";
-                    #else
-                        return "Unknown Architecture";
-                    #endif
-                #endif
-            }
-            
-            std::string getName()
-            {
-                #ifdef AFW_TARGET_PLATFORM_WINDOWS
-                    return "Microsoft Windows";
-                #elif defined(AFW_TARGET_PLATFORM_GNU_LINUX)
-                    struct utsname linuxname_temp;
-                    uname(&linuxname_temp);
-                    return std::string(linuxname_temp.sysname);
-                #elif defined(AFW_TARGET_PLATFORM_ANDROID)
-                    return "Android";
-                #else
-                    return "Unknown Operation System";
-                #endif
-            }
+	namespace Info {
+		namespace OS {
+			std::string getManufacturer()
+			{
+				#ifdef AFW_TARGET_PLATFORM_WINDOWS
+					return "Microsoft Corporation";
+				#elif defined(AFW_TARGET_PLATFORM_APPLE)
+					return "Apple Inc.";
+				#else
+					return "Unknown Manufacturer";
+				#endif
+			}
+			std::string getArchitecture()
+			{
+				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
+					struct utsname linuxname_temp;
+					uname(&linuxname_temp);
+					return std::string(linuxname_temp.machine);
+				#else
+					#ifdef AFW_TARGET_CPUARCH_INTELX86
+						return "x86 32-bit";
+					#elif defined(AFW_TARGET_CPUARCH_AMD64)
+						return "x86 64-bit";
+					#elif defined(AFW_TARGET_CPUARCH_ARM)
+						return "ARM";
+					#else
+						return "Unknown Architecture";
+					#endif
+				#endif
+			}
+			
+			std::string getName()
+			{
+				#ifdef AFW_TARGET_PLATFORM_WINDOWS
+					return "Microsoft Windows";
+				#elif defined(AFW_TARGET_PLATFORM_GNU_LINUX)
+					struct utsname linuxname_temp;
+					uname(&linuxname_temp);
+					return std::string(linuxname_temp.sysname);
+				#elif defined(AFW_TARGET_PLATFORM_ANDROID)
+					return "Android";
+				#else
+					return "Unknown Operation System";
+				#endif
+			}
 
-            std::string getVersion()
-            {
-                // TODO: Get Version for Windows Platforms
-                #ifdef AFW_TARGET_PLATFORM_GNU_LINUX
-                    struct utsname linuxname_temp;
-                    uname(&linuxname_temp);
-                    return std::string(linuxname_temp.release) + std::string(linuxname_temp.version);
-                #else
-                    return "Unknown Version";
-                #endif
-            }
+			std::string getVersion()
+			{
+				// TODO: Get Version for Windows Platforms
+				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
+					struct utsname linuxname_temp;
+					uname(&linuxname_temp);
+					return std::string(linuxname_temp.release) + std::string(linuxname_temp.version);
+				#else
+					return "Unknown Version";
+				#endif
+			}
 
-            std::string getUserComputerName()
-            {
-                // TODO: Get User computer name for others platforms
-                #ifdef AFW_TARGET_PLATFORM_GNU_LINUX
-                    struct utsname linuxname_temp;
-                    uname(&linuxname_temp);
-                    return std::string(linuxname_temp.nodename);
-        		#elif defined(AFW_TARGET_PLATFORM_WINDOWS)
-        			return "Unknown"; // Temporary
-                #else
-                    return "Unknown";
-                #endif
-            }
-        }
-    }
+			std::string getUserComputerName()
+			{
+				// TODO: Get User computer name for others platforms
+				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
+					struct utsname linuxname_temp;
+					uname(&linuxname_temp);
+					return std::string(linuxname_temp.nodename);
+				#elif defined(AFW_TARGET_PLATFORM_WINDOWS)
+					return "Unknown"; // Temporary
+				#else
+					return "Unknown";
+				#endif
+			}
+		}
+	}
 }

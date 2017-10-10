@@ -20,8 +20,8 @@
 
 #include <AuroraFW/Global.h>
 
-#include <AuroraFW/TLib/Target/Environment.h>
-#include <AuroraFW/TLib/Target/Platform.h>
+#include <AuroraFW/STDL/Target/Environment.h>
+#include <AuroraFW/STDL/Target/Platform.h>
 
 #ifdef AFW_TARGET_ENVIRONMENT_POSIX
 #include <chrono>
@@ -36,7 +36,7 @@ namespace AuroraFW {
 		typedef std::chrono::duration<float, std::milli> milliseconds_type;
 		#endif
 
-		class AFW_PREFIX Timer
+		class AFW_EXPORT Timer
 		{
 		private:
 			#ifdef AFW_TARGET_ENVIRONMENT_POSIX

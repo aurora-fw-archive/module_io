@@ -20,7 +20,7 @@
 #define INCLUDE_H_AFW_INFO_OS
 
 #include <iostream>
-#include <AuroraFW/TLib/Target/Platform.h>
+#include <AuroraFW/STDL/Target/Platform.h>
 
 #ifdef AFW_TARGET_PLATFORM_ANDROID
     #include <android/api-level.h>
