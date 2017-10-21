@@ -23,7 +23,7 @@ endif()
 include_directories(${AURORAFW_MODULE_IO_DIR}/include)
 
 add_library (aurorafw-io SHARED ${AURORAFW_MODULE_IO_SOURCE_DIR}/InfoOS.cpp
-                              ${AURORAFW_MODULE_IO_SOURCE_DIR}/InfoRAM.cpp
-                              ${AURORAFW_MODULE_IO_SOURCE_DIR}/Timer.cpp)
+							  ${AURORAFW_MODULE_IO_SOURCE_DIR}/InfoRAM.cpp
+							  ${AURORAFW_MODULE_IO_SOURCE_DIR}/Timer.cpp)
 
 set_target_properties(aurorafw-io PROPERTIES OUTPUT_NAME aurorafw-io)
