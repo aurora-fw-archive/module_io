@@ -16,25 +16,16 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_IO_FILE_H
-#define AURORAFW_IO_FILE_H
-
-#include <AuroraFW/Global.h>
-#include <AuroraFW/STDL/STL/String.h>
+#include <AuroraFW/IO/File.h>
 
 namespace AuroraFW {
 	namespace IO {
-		class File {
-			public:
-				File(const std::string &);
-				File(const char* );
-				bool open();
-			private:
-				FILE* _file;
-				const char* _path;
-				uint_t _len;
-		};
+		File::File(const std::string &p)
+		{
+			_path = p.c_str();
+			_file = open(_path, "rb");
+			if (file == nullptr)
+				assert(file, "Could not open file '", _path, "'.");
+		}
 	}
 }
-
-#endif // AURORAFW_IO_FILE_H
