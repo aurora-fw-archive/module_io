@@ -22,8 +22,13 @@ endif()
 
 include_directories(${AURORAFW_MODULE_IO_DIR}/include)
 
-add_library (aurorafw-io SHARED ${AURORAFW_MODULE_IO_SOURCE_DIR}/InfoOS.cpp
-							  ${AURORAFW_MODULE_IO_SOURCE_DIR}/InfoRAM.cpp
-							  ${AURORAFW_MODULE_IO_SOURCE_DIR}/Timer.cpp)
+file(GLOB_RECURSE AURORAFW_MODULE_IO_HEADERS ${AURORAFW_MODULE_IO_DIR}/include/*.*)
+file(GLOB_RECURSE AURORAFW_MODULE_IO_SOURCE ${AURORAFW_MODULE_IO_SOURCE_DIR}/*.*)
+
+add_library (aurorafw-io SHARED ${AURORAFW_MODULE_IO_SOURCE})
+
+if(AURORA_PCH)
+	add_precompiled_header(aurorafw-io "${AURORAFW_MODULE_IO_HEADERS}")
+endif()
 
 set_target_properties(aurorafw-io PROPERTIES OUTPUT_NAME aurorafw-io)
