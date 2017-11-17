@@ -16,4 +16,7 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#pragma once
+#ifndef AURORAFW_IO_INPUT_H
+#define AURORAFW_IO_INPUT_H
+
+#endif // AURORAFW_IO_INPUT_H

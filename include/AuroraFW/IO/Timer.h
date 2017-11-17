@@ -16,7 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#pragma once
+#ifndef AURORAFW_IO_TIMER_H
+#define AURORAFW_IO_TIMER_H
 
 #include <AuroraFW/Global.h>
 
@@ -54,3 +55,5 @@ namespace AuroraFW {
 		};
 	}
 }
+
+#endif // AURORAFW_IO_TIMER_H
