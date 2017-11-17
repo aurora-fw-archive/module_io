@@ -22,18 +22,59 @@
 #include <AuroraFW/Global.h>
 #include <AuroraFW/STDL/STL/String.h>
 
+#include <AuroraFW/IO/Flags.h>
+
 namespace AuroraFW {
 	namespace IO {
-		class File {
+		class FileNotFoundException: public std::exception
+		{
+		private:
+			const std::string _path;
+		public:
+			FileNotFoundException(const char *);
+			virtual const char* what() const throw();
+		};
+
+		class FileAllocationFailedException: public std::exception
+		{
+		private:
+			const std::string _path;
+		public:
+			FileAllocationFailedException(const char *);
+			virtual const char* what() const throw();
+		};
+
+		class FileIsReadOnlyException: public std::exception
+		{
+		private:
+			const std::string _path;
+		public:
+			FileIsReadOnlyException(const char *);
+			virtual const char* what() const throw();
+		};
+
+		class FileIsWriteOnlyException: public std::exception
+		{
+		private:
+			const std::string _path;
+		public:
+			FileIsWriteOnlyException(const char *);
+			virtual const char* what() const throw();
+		};
+
+		class AFW_EXPORT File {
 			public:
-				File(const std::string &);
-				File(const char* );
-				bool open();
+				File(const std::string &, Flags = (Read | Write));
+				File(const char* , Flags = (Read | Write));
+				void readLine();
 			private:
 				FILE* _file;
 				const char* _path;
 				uint_t _len;
 		};
+
+		std::string readFile(const char* );
+		std::string readFile(std::string &);
 	}
 }
 

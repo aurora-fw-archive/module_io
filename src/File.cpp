@@ -17,15 +17,58 @@
 ****************************************************************************/
 
 #include <AuroraFW/IO/File.h>
+#include <AuroraFW/STDL/LibC/Assert.h>
+#include <AuroraFW/STDL/STL/Algorithm.h>
 
 namespace AuroraFW {
 	namespace IO {
-		File::File(const std::string &p)
+		File::File(const std::string &path, Flags f)
 		{
-			_path = p.c_str();
-			_file = open(_path, "rb");
+			_path = path.c_str();
+			if(f == Read)
+				_file = fopen(_path, "rb");
+			else if(f == Write)
+				_file = fopen(_path, "wb");
+			else if(f == Read | Write)
+				_file = fopen(_path, "rb");
+			
+			if (_file == nullptr)
+				assert(_file);
+		}
+		std::string readFile(std::string &path)
+		{
+			FILE* file = fopen(path.c_str(), "rb");
 			if (file == nullptr)
-				assert(file, "Could not open file '", _path, "'.");
+					assert(file);
+
+			fseek(file, 0, SEEK_END);
+			int32_t length = ftell(file);
+			assert(length < 100 * 1024 * 1024);
+			std::string result(length, 0);
+			fseek(file, 0, SEEK_SET);
+			fread(&result[0], 1, length, file);
+			fclose(file);
+
+			result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
+			return result;
+		}
+
+		std::string readFile(const char* path)
+		{
+			FILE* file = fopen(path, "rb");
+			if (file == nullptr)
+					assert(file);
+
+			fseek(file, 0, SEEK_END);
+			int32_t length = ftell(file);
+			assert(length < 100 * 1024 * 1024);
+			std::string result(length, 0);
+			fseek(file, 0, SEEK_SET);
+			fread(&result[0], 1, length, file);
+			fclose(file);
+
+			result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
+			return result;
 		}
 	}
 }
