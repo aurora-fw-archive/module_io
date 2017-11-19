@@ -57,7 +57,7 @@ namespace AuroraFW {
 		{
 			FILE* file = fopen(path, "rb");
 			if (file == nullptr)
-					assert(file);
+				assert(file);
 
 			fseek(file, 0, SEEK_END);
 			int32_t length = ftell(file);

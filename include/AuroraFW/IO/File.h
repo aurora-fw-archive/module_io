@@ -67,6 +67,7 @@ namespace AuroraFW {
 				File(const std::string &, Flags = (Read | Write));
 				File(const char* , Flags = (Read | Write));
 				void readLine();
+
 			private:
 				FILE* _file;
 				const char* _path;
