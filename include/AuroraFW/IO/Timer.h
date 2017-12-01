@@ -49,9 +49,9 @@ namespace AuroraFW {
 
 		public:
 			Timer();
-			void Reset();
-			float Elapsed();
-			float ElapsedMillis();
+			void reset();
+			float elapsed();
+			float elapsedMillis();
 		};
 	}
 }

@@ -28,10 +28,10 @@ namespace AuroraFW {
 			_frequency = 1.0 / freq.QuadPart;
 			#endif
 
-			Reset();
+			reset();
 		}
 
-		void Timer::Reset()
+		void Timer::reset()
 		{
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			QueryPerformanceCounter(&_start);
@@ -40,7 +40,7 @@ namespace AuroraFW {
 			#endif
 		}
 
-		float Timer::Elapsed()
+		float Timer::elapsed()
 		{
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			LARGE_INTEGER current;
@@ -48,14 +48,14 @@ namespace AuroraFW {
 			uint64 cycles = current.QuadPart - _start.QuadPart;
 			return (float)(cycles * _frequency);
 			#elif defined(AFW_TARGET_ENVIRONMENT_POSIX)
-			return ElapsedMillis() / 1000.0f;
+			return elapsedMillis() / 1000.0f;
 			#endif
 		}
 
-		float Timer::ElapsedMillis()
+		float Timer::elapsedMillis()
 		{
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
-			return Elapsed() * 1000.0f;
+			return elapsed() * 1000.0f;
 			#elif defined(AFW_TARGET_ENVIRONMENT_POSIX)
 			return std::chrono::duration_cast<milliseconds_type>(HighResolutionClock::now() - _start).count();
 			#endif
