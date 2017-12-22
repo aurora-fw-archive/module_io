@@ -35,23 +35,6 @@ namespace AuroraFW {
 			if (_file == nullptr)
 				assert(_file);
 		}
-		std::string readFile(std::string &path)
-		{
-			FILE* file = fopen(path.c_str(), "rb");
-			if (file == nullptr)
-					assert(file);
-
-			fseek(file, 0, SEEK_END);
-			int32_t length = ftell(file);
-			assert(length < 100 * 1024 * 1024);
-			std::string result(length, 0);
-			fseek(file, 0, SEEK_SET);
-			fread(&result[0], 1, length, file);
-			fclose(file);
-
-			result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
-			return result;
-		}
 
 		std::string readFile(const char* path)
 		{
