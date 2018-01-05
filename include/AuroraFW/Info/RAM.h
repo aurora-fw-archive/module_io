@@ -19,17 +19,19 @@
 #ifndef INCLUDE_H_AFW_INFO_RAM
 #define INCLUDE_H_AFW_INFO_RAM
 
+#include <AuroraFW/Global.h>
+
 namespace AuroraFW {
-    namespace Info {
-        namespace RAM {
-            unsigned long getTotalVirtualMemory(); // Total virtual memory size in bytes
-            unsigned long getUsedVirtualMemory(); // Used virtual memory size in bytes
-            unsigned long getFreeVirtualMemory(); // Free virtual memory size in bytes
-            unsigned long getTotalPhysicalMemory(); // Total pysical memory size in bytes
-            unsigned long getUsedPhysicalMemory(); // Used pysical memory size in bytes
-            unsigned long getFreePhysicalMemory(); // Free pysical memory size in bytes
-        }
-    }
+	namespace Info {
+		namespace RAM {
+			AFW_EXPORT extern unsigned long getTotalVirtualMemory(); // Total virtual memory size in bytes
+			AFW_EXPORT extern unsigned long getUsedVirtualMemory(); // Used virtual memory size in bytes
+			AFW_EXPORT extern unsigned long getFreeVirtualMemory(); // Free virtual memory size in bytes
+			AFW_EXPORT extern unsigned long getTotalPhysicalMemory(); // Total pysical memory size in bytes
+			AFW_EXPORT extern unsigned long getUsedPhysicalMemory(); // Used pysical memory size in bytes
+			AFW_EXPORT extern unsigned long getFreePhysicalMemory(); // Free pysical memory size in bytes
+		}
+	}
 }
 
 #endif // INCLUDE_H_AFW_INFO_RAM

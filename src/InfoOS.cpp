@@ -16,14 +16,19 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
+#include <AuroraFW/Info/OS.h>
+
 #include <AuroraFW/STDL/Target/Platform.h>
 #include <AuroraFW/STDL/Target/Architecture.h>
-#include <AuroraFW/Info/OS.h>
 
 #ifdef AFW_TARGET_PLATFORM_GNU_LINUX
 #include <sys/utsname.h>
 #elif defined(AFW_TARGET_KERNEL_NT)
 #include <windows.h>
+#endif
+
+#ifdef AFW_TARGET_PLATFORM_ANDROID
+	#include <android/api-level.h>
 #endif
 
 namespace AuroraFW {

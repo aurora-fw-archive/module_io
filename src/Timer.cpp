@@ -17,6 +17,7 @@
 ****************************************************************************/
 
 #include <AuroraFW/IO/Timer.h>
+#include <AuroraFW/STDL/Type.h>
 
 namespace AuroraFW {
 	namespace IO {
@@ -45,7 +46,7 @@ namespace AuroraFW {
 			#ifdef AFW_TARGET_PLATFORM_WINDOWS
 			LARGE_INTEGER current;
 			QueryPerformanceCounter(&current);
-			uint64 cycles = current.QuadPart - _start.QuadPart;
+			uint64_t cycles = current.QuadPart - _start.QuadPart;
 			return (float)(cycles * _frequency);
 			#elif defined(AFW_TARGET_ENVIRONMENT_POSIX)
 			return elapsedMillis() / 1000.0f;

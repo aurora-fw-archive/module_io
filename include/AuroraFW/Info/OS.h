@@ -19,23 +19,19 @@
 #ifndef INCLUDE_H_AFW_INFO_OS
 #define INCLUDE_H_AFW_INFO_OS
 
-#include <iostream>
-#include <AuroraFW/STDL/Target/Platform.h>
-
-#ifdef AFW_TARGET_PLATFORM_ANDROID
-    #include <android/api-level.h>
-#endif
+#include <AuroraFW/Global.h>
+#include <AuroraFW/STDL/STL/IOStream.h>
 
 namespace AuroraFW {
-    namespace Info {
-        namespace OS {
-            std::string getManufacturer();
-            std::string getArchitecture();
-            std::string getVersion();
-            std::string getName();
-            std::string getUserComputerName();
-        }
-    }
+	namespace Info {
+		namespace OS {
+			AFW_EXPORT extern std::string getManufacturer();
+			AFW_EXPORT extern std::string getArchitecture();
+			AFW_EXPORT extern std::string getVersion();
+			AFW_EXPORT extern std::string getName();
+			AFW_EXPORT extern std::string getUserComputerName();
+		}
+	}
 }
 
 #endif // INCLUDE_H_AFW_INFO_OS

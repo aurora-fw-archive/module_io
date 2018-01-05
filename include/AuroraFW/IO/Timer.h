@@ -42,7 +42,7 @@ namespace AuroraFW {
 		private:
 			#ifdef AFW_TARGET_ENVIRONMENT_POSIX
 			std::chrono::time_point<HighResolutionClock> _start;
-			#elif AFW_TARGET_PLATFORM_WINDOWS
+			#elif defined(AFW_TARGET_PLATFORM_WINDOWS)
 			LARGE_INTEGER _start;
 			double _frequency;
 			#endif

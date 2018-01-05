@@ -74,7 +74,7 @@ namespace AuroraFW {
 				uint_t _len;
 		};
 
-		std::string readFile(const char* );
+		AFW_EXPORT std::string readFile(const char* );
 		inline std::string readFile(std::string &path) { return readFile(path.c_str()); }
 	}
 }
