@@ -17,7 +17,7 @@
 ****************************************************************************/
 
 #include <AuroraFW/IO/Timer.h>
-#include <AuroraFW/STDL/Type.h>
+#include <AuroraFW/CoreLib/Type.h>
 
 namespace AuroraFW {
 	namespace IO {

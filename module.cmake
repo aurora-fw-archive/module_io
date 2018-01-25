@@ -31,5 +31,4 @@ aurora_add_library_target(aurorafw-io)
 if(AURORA_PCH)
 	add_precompiled_header(aurorafw-io "${AURORAFW_MODULE_IO_HEADERS}")
 endif()
-
-set_target_properties(aurorafw-io PROPERTIES OUTPUT_NAME aurorafw-io)
+target_link_libraries(aurorafw-io aurorafw-core)

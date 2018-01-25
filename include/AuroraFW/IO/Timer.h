@@ -21,8 +21,7 @@
 
 #include <AuroraFW/Global.h>
 
-#include <AuroraFW/STDL/Target/Environment.h>
-#include <AuroraFW/STDL/Target/Platform.h>
+#include <AuroraFW/CoreLib/Target/System.h>
 
 #ifdef AFW_TARGET_ENVIRONMENT_POSIX
 #include <chrono>

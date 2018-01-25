@@ -18,8 +18,8 @@
 
 #include <AuroraFW/Info/OS.h>
 
-#include <AuroraFW/STDL/Target/Platform.h>
-#include <AuroraFW/STDL/Target/Architecture.h>
+#include <AuroraFW/CoreLib/Target/System.h>
+#include <AuroraFW/CoreLib/Target/Architecture.h>
 
 #ifdef AFW_TARGET_PLATFORM_GNU_LINUX
 #include <sys/utsname.h>
