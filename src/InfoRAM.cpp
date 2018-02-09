@@ -19,13 +19,22 @@
 #include <AuroraFW/CoreLib/Target/System.h>
 
 #ifdef AFW_TARGET_PLATFORM_WINDOWS
-#include <windows.h>
-#elif defined(AFW_TARGET_PLATFORM_GNU_LINUX)
-#include <sys/sysinfo.h>
-#elif defined(AFW_TARGET_PLATFORM_APPLE_MAC)
-#include <sys/types.h>
-#include <sys/sysctl.h>
-#include <sys/vmmeter.h>
+	#pragma comment(lib, "psapi.lib")
+	#include <windows.h>
+	#include <psapi.h>
+#elif defined(AFW_TARGET_ENVIRONMENT_UNIX) || defined(AFW_TARGET_PLATFORM_APPLE_MAC)
+	#include <unistd.h>
+	#include <sys/resource.h>
+
+	#if defined(AFW_TARGET_KERNEL_LINUX)
+		#include <sys/sysinfo.h>
+		#include <stdio.h>
+	#elif defined(AFW_TARGET_PLATFORM_APPLE_MAC)
+		#include <mach/mach.h>
+		#include <sys/types.h>
+		#include <sys/sysctl.h>
+		#include <sys/vmmeter.h>
+	#endif
 #endif
 
 #include <AuroraFW/Info/RAM.h>
@@ -34,9 +43,9 @@ namespace AuroraFW {
 	namespace Info {
 		namespace RAM {
 			// Total virtual memory size in bytes
-			unsigned long getTotalVirtualMemory()
+			AFW_EXPORT size_t getTotalVirtualMemory()
 			{
-				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
+				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
 				sysinfo (&mem_temp);
 				return (mem_temp.totalram + mem_temp.totalswap) * mem_temp.mem_unit;
@@ -57,9 +66,9 @@ namespace AuroraFW {
 			}
 
 			// Used virtual memory size in bytes
-			unsigned long getUsedVirtualMemory()
+			AFW_EXPORT size_t getUsedVirtualMemory()
 			{
-				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
+				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
 				sysinfo (&mem_temp);
 				return ((mem_temp.totalram - mem_temp.freeram) + (mem_temp.totalswap - mem_temp.freeswap)) * mem_temp.mem_unit;
@@ -76,9 +85,9 @@ namespace AuroraFW {
 			}
 
 			// Free virtual memory size in bytes
-			unsigned long getFreeVirtualMemory()
+			AFW_EXPORT size_t getFreeVirtualMemory()
 			{
-				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
+				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
 				sysinfo (&mem_temp);
 				return ((mem_temp.totalram + mem_temp.totalswap) - ((mem_temp.totalram - mem_temp.freeram) + (mem_temp.totalswap - mem_temp.freeswap))) * mem_temp.mem_unit;
@@ -99,9 +108,9 @@ namespace AuroraFW {
 			}
 
 			// Total pysical memory size in bytes
-			unsigned long getTotalPhysicalMemory()
+			AFW_EXPORT size_t getTotalPhysicalMemory()
 			{
-				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
+				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
 				sysinfo (&mem_temp);
 				return mem_temp.totalram * mem_temp.mem_unit;
@@ -128,9 +137,9 @@ namespace AuroraFW {
 			}
 
 			// Used pysical memory size in bytes
-			unsigned long getUsedPhysicalMemory()
+			AFW_EXPORT size_t getUsedPhysicalMemory()
 			{
-				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
+				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
 				sysinfo (&mem_temp);
 				return (mem_temp.totalram - mem_temp.freeram) * mem_temp.mem_unit;
@@ -159,9 +168,9 @@ namespace AuroraFW {
 			}
 
 			// Free pysical memory size in bytes
-			unsigned long getFreePhysicalMemory()
+			AFW_EXPORT size_t getFreePhysicalMemory()
 			{
-				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
+				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
 				sysinfo (&mem_temp);
 				return mem_temp.freeram * mem_temp.mem_unit;
@@ -178,6 +187,53 @@ namespace AuroraFW {
 				struct vmmeter mem_temp;
 				vmmeter (&mem_temp);
 				return mem_temp.v_free_count;
+				#endif
+			}
+
+			AFW_EXPORT size_t getCurrentRSS()
+			{
+				#ifdef AFW_TARGET_PLATFORM_WINDOWS
+					PROCESS_MEMORY_COUNTERS info;
+					GetProcessMemoryInfo(GetCurrentProcess(), &info, sizeof(info));
+					return info.WorkingSetSize;
+				#elif defined(AFW_TARGET_KERNEL_LINUX)
+					FILE* fp = fopen("/proc/self/status", "r");
+					if(fp == AFW_NULL)
+						return AFW_NULLVAL;
+					size_t ret;
+					if (fscanf(fp, "%*s%lu", &ret) != 1) {
+						fclose(fp);
+						return AFW_NULLVAL;
+					}
+					fclose(fp);
+					return ret * sysconf(_SC_PAGESIZE);
+				#elif defined(AFW_TARGET_PLATFORM_APPLE_MAC)
+					struct mach_task_basic_info info;
+					mach_msg_type_number_t infoCount = MACH_TASK_BASIC_INFO_COUNT;
+					if (task_info(mach_task_self(), MACH_TASK_BASIC_INFO, (task_info_t)&info, &infoCount) != KERN_SUCCESS)
+						return AFW_NULLVAL;
+					return info.resident_size;
+				#else
+					return AFW_NULLVAL;
+				#endif
+			}
+
+			AFW_EXPORT size_t getPeakRSS()
+			{
+				#ifdef AFW_TARGET_PLATFORM_WINDOWS
+					PROCESS_MEMORY_COUNTERS info;
+					GetProcessMemoryInfo(GetCurrentProcess(), &info, sizeof(info));
+					return (size_t)info.PeakWorkingSetSize;
+				#elif defined(AFW_TARGET_ENVIRONMENT_UNIX) || defined(AFW_TARGET_PLATFORM_APPLE_MAC)
+					struct rusage ret;
+					getrusage(RUSAGE_SELF, &ret);
+					#if defined(AFW_TARGET_PLATFORM_APPLE_MAC)
+						return ret.ru_maxrss;
+					#else
+						return ret.ru_maxrss * 1024;
+					#endif
+				#else
+					return AFW_NULLVAL;
 				#endif
 			}
 		}
