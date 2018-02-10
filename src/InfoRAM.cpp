@@ -91,7 +91,7 @@ namespace AuroraFW {
 				struct sysinfo mem_temp;
 				sysinfo (&mem_temp);
 				return ((mem_temp.totalram + mem_temp.totalswap) - ((mem_temp.totalram - mem_temp.freeram) + (mem_temp.totalswap - mem_temp.freeswap))) * mem_temp.mem_unit;
-				#elif defined(AFW_TARGET_WINDOWS)
+				#elif defined(AFW_TARGET_PLATFORM_WINDOWS)
 
 				// TODO: Needs to be tested
 				MEMORYSTATUSEX mem_temp;

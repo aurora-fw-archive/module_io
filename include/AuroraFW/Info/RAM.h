@@ -24,12 +24,12 @@
 namespace AuroraFW {
 	namespace Info {
 		namespace RAM {
-			AFW_EXPORT extern unsigned long getTotalVirtualMemory(); // Total virtual memory size in bytes
-			AFW_EXPORT extern unsigned long getUsedVirtualMemory(); // Used virtual memory size in bytes
-			AFW_EXPORT extern unsigned long getFreeVirtualMemory(); // Free virtual memory size in bytes
-			AFW_EXPORT extern unsigned long getTotalPhysicalMemory(); // Total pysical memory size in bytes
-			AFW_EXPORT extern unsigned long getUsedPhysicalMemory(); // Used pysical memory size in bytes
-			AFW_EXPORT extern unsigned long getFreePhysicalMemory(); // Free pysical memory size in bytes
+			AFW_EXPORT extern size_t getTotalVirtualMemory(); // Total virtual memory size in bytes
+			AFW_EXPORT extern size_t getUsedVirtualMemory(); // Used virtual memory size in bytes
+			AFW_EXPORT extern size_t getFreeVirtualMemory(); // Free virtual memory size in bytes
+			AFW_EXPORT extern size_t getTotalPhysicalMemory(); // Total pysical memory size in bytes
+			AFW_EXPORT extern size_t getUsedPhysicalMemory(); // Used pysical memory size in bytes
+			AFW_EXPORT extern size_t getFreePhysicalMemory(); // Free pysical memory size in bytes
 		}
 	}
 }
