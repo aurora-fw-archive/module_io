@@ -37,7 +37,7 @@ namespace AuroraFW {
 
 		SystemMemoryInfo MemoryManager::getSystemInfo()
 		{
-			//TODO: Need to be implemented
+			#pragma message ("TODO: Need to be implemented")
 		}
 }
 }

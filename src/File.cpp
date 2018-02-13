@@ -29,7 +29,7 @@ namespace AuroraFW {
 				_file = fopen(_path, "rb");
 			else if(f == Write)
 				_file = fopen(_path, "wb");
-			else if(f == Read | Write)
+			else if((f == Read) | Write)
 				_file = fopen(_path, "rb");
 			
 			if (_file == nullptr)

@@ -42,7 +42,9 @@ namespace AuroraFW {
 			static void* allocate(size_t , MemoryStats& , const char* , uint );
 
 			inline void free(void* block) { free(block, _stats); }
+			inline void free(void* block, size_t size) { free(block, size, _stats); }
 			static void free(void* , MemoryStats& );
+			static void free(void* , size_t , MemoryStats& );
 
 			inline MemoryStats getMemoryStats() const { return _stats; }
 
@@ -83,6 +85,16 @@ inline void operator delete(void* block) AFW_NOEXCEPT
 inline void operator delete[](void* block) AFW_NOEXCEPT
 {
 	AuroraFW::IO::Allocator::free(block, AuroraFW::IO::MemoryManager::getMemoryStats());
+}
+
+inline void operator delete(void* block, size_t size) AFW_NOEXCEPT
+{
+	AuroraFW::IO::Allocator::free(block, size, AuroraFW::IO::MemoryManager::getMemoryStats());
+}
+
+inline void operator delete[](void* block, size_t size) AFW_NOEXCEPT
+{
+	AuroraFW::IO::Allocator::free(block, size, AuroraFW::IO::MemoryManager::getMemoryStats());
 }
 
 #endif // AURORAFW_IO_ALLOCATOR_H
