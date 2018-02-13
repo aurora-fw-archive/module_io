@@ -16,48 +16,51 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_IO_TIMER_H
-#define AURORAFW_IO_TIMER_H
-
-#include <AuroraFW/Global.h>
-#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
-	#pragma once
-#endif
-
-#include <AuroraFW/Internal/Config.h>
-
-#include <AuroraFW/CoreLib/Target/System.h>
-
-#ifdef AFW_TARGET_ENVIRONMENT_POSIX
-#include <chrono>
-#elif defined(AFW_TARGET_PLATFORM_WINDOWS)
-#include <Windows.h>
-#endif
+#include <AuroraFW/IO/Allocator.h>
+#include <AuroraFW/STDL/LibC/Assert.h>
+#include <AuroraFW/STDL/LibC/String.h>
+#include <AuroraFW/CLI/Log.h>
 
 namespace AuroraFW {
 	namespace IO {
-		#ifdef AFW_TARGET_ENVIRONMENT_POSIX
-		typedef std::chrono::high_resolution_clock HighResolutionClock;
-		typedef std::chrono::duration<float, std::milli> milliseconds_type;
-		#endif
+		Allocator::Allocator()
+			: _stats({0,0,0,0})
+		{}
 
-		class AFW_API Timer
+		Allocator::Allocator(MemoryStats stats)
+			: _stats(stats)
+		{}
+
+		Allocator::~Allocator()
+		{}
+
+		void* Allocator::allocate(size_t size, MemoryStats &stats)
 		{
-		private:
-			#ifdef AFW_TARGET_ENVIRONMENT_POSIX
-			std::chrono::time_point<HighResolutionClock> _start;
-			#elif defined(AFW_TARGET_PLATFORM_WINDOWS)
-			LARGE_INTEGER _start;
-			double _frequency;
-			#endif
+			assert(size < 1024 * 1024 * 1024);
+			stats.add(size);
+			size_t asize = size + sizeof(size_t);
+			byte_t* ret = (byte_t*)AFW_ALIGNED_ALLOC(asize, 16);
+			memset(ret, 0, asize);
+			memcpy(ret, &size, sizeof(size_t));
+			ret += sizeof(size_t);
+			return ret;
+		}
 
-		public:
-			Timer();
-			void reset();
-			float elapsed();
-			float elapsedMillis();
-		};
+		void* Allocator::allocate(size_t size, MemoryStats &stats, const char* file, uint line)
+		{
+			assert(size < 1024 * 1024 * 1024);
+			if(size > 1024 * 1024)
+				CLI::Log(CLI::Warning, "Large allocation (>1MB) at ", file, ":", line);
+
+			return allocate(size, stats);
+		}
+
+		void Allocator::free(void* block, MemoryStats &stats)
+		{
+			byte_t *mem = (byte_t *)block - sizeof(size_t);
+			size_t size = *(size_t *)mem;
+			stats.remove(size);
+			AFW_ALIGNED_FREE(mem);
+		}
 	}
 }
-
-#endif // AURORAFW_IO_TIMER_H

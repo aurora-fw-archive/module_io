@@ -16,22 +16,28 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef INCLUDE_H_AFW_INFO_RAM
-#define INCLUDE_H_AFW_INFO_RAM
+#ifndef INCLUDE_H_AFW_INFO_OS
+#define INCLUDE_H_AFW_INFO_OS
 
 #include <AuroraFW/Global.h>
+#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
+	#pragma once
+#endif
+
+#include <AuroraFW/Internal/Config.h>
+
+#include <AuroraFW/STDL/STL/IOStream.h>
 
 namespace AuroraFW {
-	namespace Info {
-		namespace RAM {
-			AFW_EXPORT extern size_t getTotalVirtualMemory(); // Total virtual memory size in bytes
-			AFW_EXPORT extern size_t getUsedVirtualMemory(); // Used virtual memory size in bytes
-			AFW_EXPORT extern size_t getFreeVirtualMemory(); // Free virtual memory size in bytes
-			AFW_EXPORT extern size_t getTotalPhysicalMemory(); // Total pysical memory size in bytes
-			AFW_EXPORT extern size_t getUsedPhysicalMemory(); // Used pysical memory size in bytes
-			AFW_EXPORT extern size_t getFreePhysicalMemory(); // Free pysical memory size in bytes
+	namespace IO {
+		namespace Info {
+			AFW_API extern std::string getOSManufacturer();
+			AFW_API extern std::string getOSVersion();
+			AFW_API extern std::string getOSName();
+			AFW_API extern std::string getArchitecture();
+			AFW_API extern std::string getUserComputerName();
 		}
 	}
 }
 
-#endif // INCLUDE_H_AFW_INFO_RAM
+#endif // INCLUDE_H_AFW_INFO_OS

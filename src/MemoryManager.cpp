@@ -16,22 +16,28 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef INCLUDE_H_AFW_INFO_OS
-#define INCLUDE_H_AFW_INFO_OS
-
-#include <AuroraFW/Global.h>
-#include <AuroraFW/STDL/STL/IOStream.h>
+#include <AuroraFW/IO/MemoryManager.h>
 
 namespace AuroraFW {
-	namespace Info {
-		namespace OS {
-			AFW_EXPORT extern std::string getManufacturer();
-			AFW_EXPORT extern std::string getArchitecture();
-			AFW_EXPORT extern std::string getVersion();
-			AFW_EXPORT extern std::string getName();
-			AFW_EXPORT extern std::string getUserComputerName();
+	namespace IO {
+		void MemoryStats::add(size_t size)
+		{
+			totalAllocated += size;
+			currentUsed += size;
+			totalAllocations++;
 		}
-	}
-}
 
-#endif // INCLUDE_H_AFW_INFO_OS
+		void MemoryStats::remove(size_t size)
+		{
+			totalFreed += size;
+			currentUsed -= size;
+		}
+
+		MemoryStats MemoryManager::memStats = {0, 0, 0, 0};
+
+		SystemMemoryInfo MemoryManager::getSystemInfo()
+		{
+			//TODO: Need to be implemented
+		}
+}
+}

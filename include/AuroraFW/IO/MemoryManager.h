@@ -16,8 +16,8 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#ifndef AURORAFW_IO_TIMER_H
-#define AURORAFW_IO_TIMER_H
+#ifndef AURORAFW_IO_MEMORY_H
+#define AURORAFW_IO_MEMORY_H
 
 #include <AuroraFW/Global.h>
 #if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
@@ -26,38 +26,37 @@
 
 #include <AuroraFW/Internal/Config.h>
 
-#include <AuroraFW/CoreLib/Target/System.h>
-
-#ifdef AFW_TARGET_ENVIRONMENT_POSIX
-#include <chrono>
-#elif defined(AFW_TARGET_PLATFORM_WINDOWS)
-#include <Windows.h>
-#endif
-
 namespace AuroraFW {
 	namespace IO {
-		#ifdef AFW_TARGET_ENVIRONMENT_POSIX
-		typedef std::chrono::high_resolution_clock HighResolutionClock;
-		typedef std::chrono::duration<float, std::milli> milliseconds_type;
-		#endif
-
-		class AFW_API Timer
+		struct AFW_API SystemMemoryInfo
 		{
-		private:
-			#ifdef AFW_TARGET_ENVIRONMENT_POSIX
-			std::chrono::time_point<HighResolutionClock> _start;
-			#elif defined(AFW_TARGET_PLATFORM_WINDOWS)
-			LARGE_INTEGER _start;
-			double _frequency;
-			#endif
+			size_t totalPhysicalMemory;
+			size_t availablePhysicalMemory;
+
+			size_t totalVirtualMemory;
+			size_t availableVirtualMemory;
+		};
+
+		struct AFW_API MemoryStats
+		{
+			void add(size_t );
+			void remove(size_t );
+
+			size_t totalAllocated;
+			size_t totalFreed;
+			size_t currentUsed;
+			size_t totalAllocations;
+		};
+
+		class AFW_API MemoryManager
+		{
+			static MemoryStats memStats;
 
 		public:
-			Timer();
-			void reset();
-			float elapsed();
-			float elapsedMillis();
+			static SystemMemoryInfo getSystemInfo();
+			inline static MemoryStats& getMemoryStats() { return memStats; }
 		};
 	}
 }
 
-#endif // AURORAFW_IO_TIMER_H
+#endif // AURORAFW_IO_MEMORY_H

@@ -20,6 +20,12 @@
 #define AURORAFW_IO_FILE_H
 
 #include <AuroraFW/Global.h>
+#if(AFW_TARGET_PRAGMA_ONCE_SUPPORT)
+	#pragma once
+#endif
+
+#include <AuroraFW/Internal/Config.h>
+
 #include <AuroraFW/STDL/STL/String.h>
 
 #include <AuroraFW/IO/Flags.h>
@@ -62,7 +68,7 @@ namespace AuroraFW {
 			virtual const char* what() const throw();
 		};
 
-		class AFW_EXPORT File {
+		class AFW_API File {
 			public:
 				File(const std::string &, Flags = (Read | Write));
 				File(const char* , Flags = (Read | Write));
@@ -74,7 +80,7 @@ namespace AuroraFW {
 				uint_t _len;
 		};
 
-		AFW_EXPORT std::string readFile(const char* );
+		AFW_API std::string readFile(const char* );
 		inline std::string readFile(std::string &path) { return readFile(path.c_str()); }
 	}
 }

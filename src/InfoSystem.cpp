@@ -16,7 +16,7 @@
 ** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 ****************************************************************************/
 
-#include <AuroraFW/Info/OS.h>
+#include <AuroraFW/IO/Info/System.h>
 
 #include <AuroraFW/CoreLib/Target/System.h>
 #include <AuroraFW/CoreLib/Target/Architecture.h>
@@ -32,9 +32,9 @@
 #endif
 
 namespace AuroraFW {
-	namespace Info {
-		namespace OS {
-			std::string getManufacturer()
+	namespace IO {
+		namespace Info {
+			std::string getOSManufacturer()
 			{
 				#ifdef AFW_TARGET_PLATFORM_WINDOWS
 					return "Microsoft Corporation";
@@ -63,7 +63,7 @@ namespace AuroraFW {
 				#endif
 			}
 			
-			std::string getName()
+			std::string getOSName()
 			{
 				#ifdef AFW_TARGET_PLATFORM_WINDOWS
 					return "Microsoft Windows";
@@ -78,7 +78,7 @@ namespace AuroraFW {
 				#endif
 			}
 
-			std::string getVersion()
+			std::string getOSVersion()
 			{
 				// TODO: Get Version for Windows Platforms
 				#ifdef AFW_TARGET_PLATFORM_GNU_LINUX
