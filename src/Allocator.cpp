@@ -62,5 +62,11 @@ namespace AuroraFW {
 			stats.remove(size);
 			AFW_ALIGNED_FREE(mem);
 		}
+
+		void Allocator::free(void* block, size_t size, MemoryStats &stats)
+		{
+			stats.remove(size);
+			AFW_ALIGNED_FREE((byte_t *)block - sizeof(size_t));
+		}
 	}
 }
