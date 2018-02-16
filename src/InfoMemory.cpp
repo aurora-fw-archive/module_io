@@ -43,7 +43,7 @@ namespace AuroraFW {
 	namespace IO {
 		namespace Info {
 			// Total virtual memory size in bytes
-			AFW_API size_t getTotalVirtualMemory()
+			size_t getTotalVirtualMemory()
 			{
 				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
@@ -66,7 +66,7 @@ namespace AuroraFW {
 			}
 
 			// Used virtual memory size in bytes
-			AFW_API size_t getUsedVirtualMemory()
+			size_t getUsedVirtualMemory()
 			{
 				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
@@ -85,7 +85,7 @@ namespace AuroraFW {
 			}
 
 			// Free virtual memory size in bytes
-			AFW_API size_t getFreeVirtualMemory()
+			size_t getFreeVirtualMemory()
 			{
 				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
@@ -108,7 +108,7 @@ namespace AuroraFW {
 			}
 
 			// Total pysical memory size in bytes
-			AFW_API size_t getTotalPhysicalMemory()
+			size_t getTotalPhysicalMemory()
 			{
 				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
@@ -137,7 +137,7 @@ namespace AuroraFW {
 			}
 
 			// Used pysical memory size in bytes
-			AFW_API size_t getUsedPhysicalMemory()
+			size_t getUsedPhysicalMemory()
 			{
 				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
@@ -168,7 +168,7 @@ namespace AuroraFW {
 			}
 
 			// Free pysical memory size in bytes
-			AFW_API size_t getFreePhysicalMemory()
+			size_t getFreePhysicalMemory()
 			{
 				#ifdef AFW_TARGET_KERNEL_LINUX
 				struct sysinfo mem_temp;
@@ -190,7 +190,7 @@ namespace AuroraFW {
 				#endif
 			}
 
-			AFW_API size_t getCurrentRSS()
+			size_t getCurrentRSS()
 			{
 				#ifdef AFW_TARGET_PLATFORM_WINDOWS
 					PROCESS_MEMORY_COUNTERS info;
@@ -218,7 +218,7 @@ namespace AuroraFW {
 				#endif
 			}
 
-			AFW_API size_t getPeakRSS()
+			size_t getPeakRSS()
 			{
 				#ifdef AFW_TARGET_PLATFORM_WINDOWS
 					PROCESS_MEMORY_COUNTERS info;
@@ -235,6 +235,11 @@ namespace AuroraFW {
 				#else
 					return AFW_NULLVAL;
 				#endif
+			}
+
+			SystemMemory getSystemMemory()
+			{
+				#pragma message ("TODO: Need to be implemented")
 			}
 		}
 	}

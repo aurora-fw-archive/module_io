@@ -30,12 +30,22 @@ namespace AuroraFW {
 	namespace IO {
 		namespace Info
 		{
+			struct AFW_API SystemMemory
+			{
+				size_t totalPhysicalMemory;
+				size_t availablePhysicalMemory;
+
+				size_t totalVirtualMemory;
+				size_t availableVirtualMemory;
+			};
+
 			AFW_API extern size_t getTotalVirtualMemory(); // Total virtual memory size in bytes
 			AFW_API extern size_t getUsedVirtualMemory(); // Used virtual memory size in bytes
 			AFW_API extern size_t getFreeVirtualMemory(); // Free virtual memory size in bytes
 			AFW_API extern size_t getTotalPhysicalMemory(); // Total pysical memory size in bytes
 			AFW_API extern size_t getUsedPhysicalMemory(); // Used pysical memory size in bytes
 			AFW_API extern size_t getFreePhysicalMemory(); // Free pysical memory size in bytes
+			AFW_API extern SystemMemory getSystemMemory();
 		}
 	}
 }
