@@ -26,9 +26,9 @@ file(GLOB_RECURSE AURORAFW_MODULE_IO_HEADERS ${AURORAFW_MODULE_IO_DIR}/include/*
 file(GLOB_RECURSE AURORAFW_MODULE_IO_SOURCE ${AURORAFW_MODULE_IO_SOURCE_DIR}/*.*)
 
 add_library (aurorafw-io SHARED ${AURORAFW_MODULE_IO_SOURCE})
-aurora_add_library_target(aurorafw-io SHARED)
+aurorafw_add_library_target(aurorafw-io SHARED)
 
-if(AURORA_PCH)
+if(AURORAFW_PCH)
 	add_precompiled_header(aurorafw-io "${AURORAFW_MODULE_IO_HEADERS}")
 endif()
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
