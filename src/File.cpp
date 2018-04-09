@@ -36,9 +36,9 @@ namespace AuroraFW {
 				assert(_file);
 		}
 
-		AFW_API std::string readFile(const char* path)
+		AFW_API std::string& readFile(const std::string& path)
 		{
-			FILE* file = fopen(path, "rb");
+			FILE* file = fopen(path.c_str(), "rb");
 			if (file == nullptr)
 				assert(file);
 

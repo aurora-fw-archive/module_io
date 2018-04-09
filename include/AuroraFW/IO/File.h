@@ -30,59 +30,56 @@
 
 #include <AuroraFW/IO/Flags.h>
 
-namespace AuroraFW {
-	namespace IO {
-		class FileNotFoundException: public std::exception
-		{
-		private:
-			const std::string _path;
+namespace AuroraFW::IO {
+	class FileNotFoundException: public std::exception
+	{
+	private:
+		const std::string _path;
+	public:
+		FileNotFoundException(const char *);
+		virtual const char* what() const throw();
+	};
+
+	class FileAllocationFailedException: public std::exception
+	{
+	private:
+		const std::string _path;
+	public:
+		FileAllocationFailedException(const char *);
+		virtual const char* what() const throw();
+	};
+
+	class FileIsReadOnlyException: public std::exception
+	{
+	private:
+		const std::string _path;
+	public:
+		FileIsReadOnlyException(const char *);
+		virtual const char* what() const throw();
+	};
+
+	class FileIsWriteOnlyException: public std::exception
+	{
+	private:
+		const std::string _path;
+	public:
+		FileIsWriteOnlyException(const char *);
+		virtual const char* what() const throw();
+	};
+
+	class AFW_API File {
 		public:
-			FileNotFoundException(const char *);
-			virtual const char* what() const throw();
-		};
+			File(const std::string &, Flags = (Read | Write));
+			File(const char* , Flags = (Read | Write));
+			void readLine();
 
-		class FileAllocationFailedException: public std::exception
-		{
 		private:
-			const std::string _path;
-		public:
-			FileAllocationFailedException(const char *);
-			virtual const char* what() const throw();
-		};
+			FILE* _file;
+			const char* _path;
+			uint_t _len;
+	};
 
-		class FileIsReadOnlyException: public std::exception
-		{
-		private:
-			const std::string _path;
-		public:
-			FileIsReadOnlyException(const char *);
-			virtual const char* what() const throw();
-		};
-
-		class FileIsWriteOnlyException: public std::exception
-		{
-		private:
-			const std::string _path;
-		public:
-			FileIsWriteOnlyException(const char *);
-			virtual const char* what() const throw();
-		};
-
-		class AFW_API File {
-			public:
-				File(const std::string &, Flags = (Read | Write));
-				File(const char* , Flags = (Read | Write));
-				void readLine();
-
-			private:
-				FILE* _file;
-				const char* _path;
-				uint_t _len;
-		};
-
-		AFW_API std::string readFile(const char* );
-		inline std::string readFile(std::string &path) { return readFile(path.c_str()); }
-	}
+	std::string& readFile(const std::string& );
 }
 
 #endif // AURORAFW_IO_FILE_H
