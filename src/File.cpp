@@ -19,6 +19,7 @@
 #include <AuroraFW/IO/File.h>
 #include <AuroraFW/STDL/LibC/Assert.h>
 #include <AuroraFW/STDL/STL/Algorithm.h>
+#include <AuroraFW/STDL/LibC/String.h>
 
 namespace AuroraFW {
 	namespace IO {
@@ -36,7 +37,7 @@ namespace AuroraFW {
 				assert(_file);
 		}
 
-		AFW_API std::string& readFile(const std::string& path)
+		AFW_API std::string readFile(const std::string& path)
 		{
 			FILE* file = fopen(path.c_str(), "rb");
 			if (file == nullptr)

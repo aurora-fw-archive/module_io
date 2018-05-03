@@ -79,7 +79,7 @@ namespace AuroraFW::IO {
 			uint_t _len;
 	};
 
-	std::string& readFile(const std::string& );
+	std::string readFile(const std::string& );
 }
 
 #endif // AURORAFW_IO_FILE_H
